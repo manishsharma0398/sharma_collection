@@ -50,8 +50,8 @@ export class Directory extends Component {
 
     return (
       <div className="directory-menu">
-        {sections.map(({ title, imageUrl, id, size }) => (
-          <MenuItem key={id} title={title} image={imageUrl} size={size} />
+        {sections.map(({ id, ...otherProps }) => (
+          <MenuItem key={id} {...otherProps} />
         ))}
       </div>
     );
