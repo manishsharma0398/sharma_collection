@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+import { signInWithGoogle } from "../../firebase/firebase.utils";
+// import FirebaseAuth from "../../firebase/firebase.utils";
+
 import "./SignIn.scss";
 
 import FormInput from "../form-input/FormInput";
@@ -46,7 +49,20 @@ export class SignIn extends Component {
             label="Password"
             required
           />
-          <CustomButton type="submit">SIGN IN</CustomButton>
+          <div className="buttons">
+            <CustomButton type="submit">SIGN IN</CustomButton>
+            <CustomButton
+              isGoogleSignIn
+              onClick={() => {
+                console.log("behen chod");
+                // const auth = new FirebaseAuth();
+                // FirebaseAuth.signInWithGoogle();
+                signInWithGoogle();
+              }}
+            >
+              SIGN IN WITH GOOGLE
+            </CustomButton>
+          </div>
         </form>
       </div>
     );
