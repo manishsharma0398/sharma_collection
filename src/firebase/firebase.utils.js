@@ -28,7 +28,9 @@ const firebaseConfig = {
 //   };
 // }
 
-app.initializeApp(firebaseConfig);
+!app.apps.length ? app.initializeApp(firebaseConfig) : app.app();
+
+// app.initializeApp(firebaseConfig);
 
 export const auth = app.auth();
 export const db = app.firestore();
@@ -37,6 +39,32 @@ export const signInWithGoogle = () => {
   const provider = new app.auth.GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
   auth.signInWithPopup(provider);
+};
+
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+  if (!userAuth) return;
+
+  const userRef = db.doc(`users/${userAuth.uid}`);
+  const userSnap = await userRef.get();
+  // console.log(userSnap);
+
+  if (!userSnap.exists) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        createdAt,
+        ...additionalData,
+      });
+    } catch (error) {
+      console.log("error creating user", error.message);
+    }
+  }
+
+  return userRef;
 };
 
 export default app;
