@@ -61,6 +61,7 @@ export class SignIn extends Component {
           <div className="buttons">
             <CustomButton type="submit">SIGN IN</CustomButton>
             <CustomButton
+              type="button"
               isGoogleSignIn
               onClick={() => {
                 console.log("behen chod");
